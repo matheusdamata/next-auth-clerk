@@ -2,6 +2,10 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import { ClerkProvider } from '@clerk/nextjs'
+import { ptBR } from '@clerk/localizations'
+import { neobrutalism } from '@clerk/themes'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -15,8 +19,23 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider
+      localization={ptBR}
+      appearance={{
+        baseTheme: neobrutalism,
+        elements: {
+          formButtonPrimary: 'bg-violet-500 hover:bg-violet-600',
+          footerActionLink: 'text-violet-500 hover:text-violet-600',
+        },
+      }}
+    >
+      <html lang="pt-BR">
+        <body className={inter.className}>
+          <div className="h-screen flex justify-center items-center">
+            {children}
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
